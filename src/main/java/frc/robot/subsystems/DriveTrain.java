@@ -8,17 +8,24 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveTrain extends SubsystemBase {
 
+  private AHRS navx = new AHRS(SPI.Port.kMXP);
+    
+  
   private final WPI_TalonSRX _leftDriveTalon;
   private final WPI_TalonSRX _righttDriveTalon;
 
   private DifferentialDrive _diffDrive;
+
+  private double circumference = 1.6; //this in cm
 
 
   /** Creates a new DriveTrain. */
@@ -41,11 +48,7 @@ public class DriveTrain extends SubsystemBase {
   }                                     
 
 
-  public void resetEncoders() {
-    _leftDriveTalon.setSelectedSensorPosition(0, 0, 10);
-    _righttDriveTalon.setSelectedSensorPosition(0, 0, 10);
-
-  }
+  
   @Override
   public void periodic() {
 
@@ -55,16 +58,24 @@ public class DriveTrain extends SubsystemBase {
     
   }
 
+  public void resetEncoders() {
+    _leftDriveTalon.setSelectedSensorPosition(0, 0, 10);
+    _righttDriveTalon.setSelectedSensorPosition(0, 0, 10);
+
+  }
+
+  public double getAngle(){
+      return navx.getAngle();
+  }
+  
   public double getPosition(){
-    
-    
-      return _leftDriveTalon.getSelectedSensorPosition(0);                        
+      return ((_leftDriveTalon.getSelectedSensorPosition(0) + _righttDriveTalon.getSelectedSensorPosition(0))/2) * (circumference/4096);                        
 
   }
   public double getVelocity(){
     
     
-      return _leftDriveTalon.getSensorCollection().getPulseWidthVelocity();        
+      return ((_leftDriveTalon.getSensorCollection().getPulseWidthVelocity() + _righttDriveTalon.getSensorCollection().getPulseWidthVelocity())/2) * (circumference/4096);        
   }
   public void tankDrive(double leftSpeed, double rightSpeed) {
     _diffDrive.tankDrive(leftSpeed, rightSpeed);

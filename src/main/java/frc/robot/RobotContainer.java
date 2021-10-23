@@ -14,7 +14,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.commands.Path;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,11 +30,14 @@ public class RobotContainer {
  // private final TankDrive _tankDrive;
   private final ArcadeDrive _arcadeDrive;
   private final TimeDrive _timeDrive;
+  private final Path _p;
+  
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    _p = new Path();
     _driveTrain = new DriveTrain();
     _leftJoystick = new Joystick(Constants.USBOrder.One);
     _rightJoystick = new Joystick(Constants.USBOrder.Zero);
@@ -66,6 +69,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return _timeDrive;
+    return _p;
+
+  }
+  public DriveTrain getDriveTrain(){
+    return _driveTrain;
   }
 }
