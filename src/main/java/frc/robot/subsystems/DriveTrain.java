@@ -67,7 +67,7 @@ public class DriveTrain extends SubsystemBase {
   public double getAngle(){
       return navx.getAngle();
   }
-  
+
   public double getPosition(){
       return ((_leftDriveTalon.getSelectedSensorPosition(0) + _righttDriveTalon.getSelectedSensorPosition(0))/2) * (circumference/4096);                        
 
@@ -85,6 +85,10 @@ public class DriveTrain extends SubsystemBase {
 
   public void arcadeDrive(double xAxisSpeed, double yAxisSpeed) {
     _diffDrive.arcadeDrive(xAxisSpeed, yAxisSpeed);
+  }
+
+  public void navxReset(){
+    navx.reset();
   }
 
 }

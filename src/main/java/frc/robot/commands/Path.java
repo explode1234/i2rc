@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import frc.robot.RobotContainer;
 import frc.robot.RobotContainer;
 
 
@@ -14,11 +15,11 @@ import frc.robot.RobotContainer;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Path extends SequentialCommandGroup {
   /** Creates a new Path. */
-  
-  private RobotContainer rc = new RobotContainer();
+
   public Path() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new CoderDrive(rc.getDriveTrain(), 0.6 , 3));
+    addCommands(new CoderDrive(RobotContainer.getDriveTrain(), 0.6, 10.0));
+    
   }
 }

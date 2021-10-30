@@ -24,7 +24,7 @@ import frc.robot.commands.Path;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveTrain _driveTrain;
+  private static final DriveTrain _driveTrain = new DriveTrain();
   private final Joystick _leftJoystick;
   private final Joystick _rightJoystick;
  // private final TankDrive _tankDrive;
@@ -38,7 +38,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     _p = new Path();
-    _driveTrain = new DriveTrain();
     _leftJoystick = new Joystick(Constants.USBOrder.One);
     _rightJoystick = new Joystick(Constants.USBOrder.Zero);
   // _tankDrive = new TankDrive(_driveTrain, _leftJoystick, _rightJoystick);
@@ -72,7 +71,7 @@ public class RobotContainer {
     return _p;
 
   }
-  public DriveTrain getDriveTrain(){
+  public static DriveTrain getDriveTrain(){
     return _driveTrain;
   }
 }
